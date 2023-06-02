@@ -69,7 +69,7 @@ button:hover{
 #container > div{
     height: 250px;
     padding: 18px;
-    border: 1px solid red;
+    /* border: 1px solid red; */
     
 }
 #container > div > img{
@@ -91,4 +91,14 @@ button:hover{
     font-size: 15px;
     color: gray;
     font-weight: 600;
+}
+
+.video-info{
+    display: flex;
+    gap: 10px;
+}
+
+.video-info > .logo > img{
+    width: 50px;
+    border-radius: 50%;
 }

@@ -10,7 +10,7 @@ button.addEventListener("click", SearchVideo);
 function SearchVideo(){
    let SearchValue = SearchInput.value;
  // fetch list of video for whatever video user search;
- console.log(SearchValue)
+//  console.log(SearchValue)
    fetchData(SearchValue);
 }
 
@@ -22,10 +22,15 @@ async function fetchData(SearchValue){
     let datalist = await response.json();
     // console.log(datalist);
     // console.log(datalist.items[0].snippet.thumbnails.high.url);
-   for(let item of datalist){
+   for(let item of datalist.items){
     let videoId = item.id.videoId;
-    let videoStats = await fetchStats(videoId);
-
+    let videoStats =await fetchStats(videoId);
+    // console.log(videoStats.viewCount);
+    // console.log(videoStats.items[0].statistics);
+    if(videoStats.items.length>0)    
+    item.videoStats=videoStats.items[0].statistics; 
+    item.duration=videoStats.items[0] && videoStats.items[0].contentDetails.duration;
+  
    }
     renderList(datalist.items);   
   }
@@ -33,19 +38,42 @@ async function fetchData(SearchValue){
     alert("Something Went Error "+ error);
    }
 }
-
+function formatVeiw(viewCount){
+      if(viewCount<1000){
+        return viewCount;
+      }
+      else if(viewCount >=1000 && viewCount <= 999999)
+      {
+        const thousand = parseInt(viewCount / 1000);
+        return thousand + "K";
+      }
+      else if(viewCount >= 1000000){
+            const millians = parseInt(viewCount/10000);
+            return millians + "M";
+      }
+}
 function renderList(items){
     container.innerHTML = "";
     for(let i=0; i < items.length; i++)
     {
        let videolist = items[i];
+    //    console.log(videolist);
        let img_url = videolist.snippet.thumbnails.high.url;
        let videoElement = document.createElement("div");
     //    console.log(videolist.videoStats);
        let videoChildren = `
           <img src="${img_url}" /> 
-          <p class="title">${videolist.snippet.title}</p>
-          <p class="channel-name">${videolist.snippet.channelTitle}</p>`;
+          <div class="video-info">
+                <div class="logo">
+                    <img src="youtube.png" alt="">
+                </div> 
+                <div class="title-view">
+                    <p class="title">${videolist.snippet.title}</p>
+                      <p class="channel-name">${videolist.snippet.channelTitle}</p>
+                     <div class="view">${videolist.videoStats ? formatVeiw(videolist.videoStats.viewCount) + ' VIEW' : 'NA'}</div>;
+                </div>
+            </div>
+         `;
 
         videoElement.innerHTML = videoChildren;
        container.append(videoElement);
@@ -75,6 +103,18 @@ function renderList(items){
 
 // fetchViewCount();
 
-function fetchStats(videoId){
-    
+async function fetchStats(videoId){
+    // console.log(videoId);
+    // const endPoint = `https://youtube.googleapis.com/youtube/v3/videos?part=statistics,contentDetails&id=${videoId}&key=${apiKey}`;
+    const endPoint = `https://www.googleapis.com/youtube/v3/videos?&part=statistics,contentDetails&id=${videoId}&key=${apiKey}`;
+   try{
+          let response = await fetch(endPoint);
+          let data = await response.json();
+        //   console.log(data);
+        return data;
+   }
+   catch(error){
+    alert("something wrong happen "+ error);
+   }
+
 }
