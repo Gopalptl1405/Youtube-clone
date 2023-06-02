@@ -1,0 +1,94 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    /* background-color: black; */
+    font-family: 'Poppins', sans-serif;
+     font-family: 'Source Sans Pro', sans-serif
+}
+
+.Search-container{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+img{
+    width: 100px;
+    /* background-color: bla; */
+}
+.logo{
+    position: relative;
+    /* border: 1px solid black; */
+}
+.Youtube-text{
+    position: absolute;
+    top: 24px;
+    left: 72px;
+    font-weight: 700;
+    font-size: 22px;
+}
+
+.search-bar{
+    display: flex;
+    flex-direction: row;
+    /* border: 1px solid black; */
+    padding: 10px;
+    width: 60%;
+    gap: 20px;
+    margin-right: 20px;
+    margin: 0 10px;
+   justify-content: space-between;
+}
+
+.search-bar > input{
+    flex-grow: 1;
+    padding: 10px;
+    margin: 5px;
+    border-radius: 20px;
+    font-size: 16px;
+    background-color: rgba(225, 219, 219, 0.456);
+}
+button{
+    padding: 5px;
+    border-radius: 20px;
+    background-color: white;
+    /* height: 8vh; */
+    margin-top: 5px;
+}
+
+button:hover{
+    background-color: rgba(225, 219, 219, 0.456);
+}
+
+#container{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    /* border: 1px solid black; */
+}
+
+#container > div{
+    height: 250px;
+    padding: 18px;
+    border: 1px solid red;
+    
+}
+#container > div > img{
+    height: 80%;
+    width: 300px;
+    cursor: pointer;
+    border-radius: 10px;
+}
+#container > div > img:hover{
+    transform: scale(1.1);
+}
+
+.title{
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.channel-name{
+    font-size: 15px;
+    color: gray;
+    font-weight: 600;
+}
